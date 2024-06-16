@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+
 
 class ScanCardScreen extends StatefulWidget {
   const ScanCardScreen({super.key});
