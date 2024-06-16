@@ -60,6 +60,22 @@ class Homescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 0, 102, 255),
+        centerTitle: true,
+        actions: [
+          Icon(Icons.menu),
+          Padding(padding: EdgeInsets.only(right: 10))
+        ],
+        title: Text(
+          "Attendance App",
+          style: TextStyle(
+              color: Colors.white,
+              wordSpacing: 2,
+              letterSpacing: 2,
+              fontWeight: FontWeight.w600),
+        ),
+      ),
       body: ListView(
         children: [
           Container(
@@ -72,21 +88,6 @@ class Homescreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.navigate_before,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                    Icon(
-                      Icons.person,
-                      size: 30,
-                      color: Colors.white,
-                    )
-                  ],
-                ),
                 SizedBox(
                   height: 20,
                 ),
