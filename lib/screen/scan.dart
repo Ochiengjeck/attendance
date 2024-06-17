@@ -6,7 +6,10 @@ import 'dart:convert';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class ScanCardScreen extends StatefulWidget {
-  const ScanCardScreen({super.key});
+  final String className; // Add this line
+
+  const ScanCardScreen({Key? key, required this.className})
+      : super(key: key); // Update constructor
 
   @override
   State<ScanCardScreen> createState() => _ScanCardScreenState();
@@ -20,7 +23,7 @@ class _ScanCardScreenState extends State<ScanCardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Take attendance'),
+        title: Text("${widget.className} Attendance"),
         centerTitle: true,
       ),
       body: Column(
@@ -101,7 +104,10 @@ class _ScanCardScreenState extends State<ScanCardScreen> {
                     final response = await http.post(
                       Uri.parse('http://192.168.0.108/attendance/record.php'),
                       headers: {'Content-Type': 'application/json'},
-                      body: jsonEncode({'names': scannedCodes}),
+                      body: jsonEncode({
+                        'className': widget.className,
+                        'names': scannedCodes,
+                      }),
                     );
                     if (response.statusCode == 200) {
                       print('Data sent successfully');
