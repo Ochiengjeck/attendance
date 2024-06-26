@@ -102,13 +102,15 @@ class _ScanCardScreenState extends State<ScanCardScreen> {
                 ElevatedButton(
                   onPressed: () async {
                     final response = await http.post(
-                      Uri.parse('http://192.168.0.108/attendance/record.php'),
+                      Uri.parse(
+                          'http://DESKTOP-A9C6618/attendance/record.php'), // Replace 'DESKTOP-A9C6618' with your actual hostname
                       headers: {'Content-Type': 'application/json'},
                       body: jsonEncode({
                         'className': widget.className,
                         'names': scannedCodes,
                       }),
                     );
+
                     if (response.statusCode == 200) {
                       print('Data sent successfully');
                       setState(() {
