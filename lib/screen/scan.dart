@@ -56,7 +56,7 @@ class _ScanCardScreenState extends State<ScanCardScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Scanned QR Data:',
+                    'Scanned ID:',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
@@ -103,7 +103,7 @@ class _ScanCardScreenState extends State<ScanCardScreen> {
                   onPressed: () async {
                     final response = await http.post(
                       Uri.parse(
-                          'http://DESKTOP-A9C6618/attendance/record.php'), // Replace 'DESKTOP-A9C6618' with your actual hostname
+                          'https://koala-literate-curiously.ngrok-free.app/attendance/record.php'),
                       headers: {'Content-Type': 'application/json'},
                       body: jsonEncode({
                         'className': widget.className,

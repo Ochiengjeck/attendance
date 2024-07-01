@@ -1,11 +1,58 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:attendance/screen/classes.dart';
 import 'package:flutter/material.dart';
+import 'package:attendance/screen/courses.dart';
+import 'package:attendance/screen/messages.dart';
+import 'package:attendance/screen/notification.dart';
+import 'package:attendance/screen/classes.dart';
 
-// ignore: must_be_immutable
-class Homescreen extends StatelessWidget {
-  List catNames = [
+class Homescreen extends StatefulWidget {
+  @override
+  _HomescreenState createState() => _HomescreenState();
+}
+
+class _HomescreenState extends State<Homescreen> {
+  int currentIndex = 0;
+  final screens = [
+    HomeScreenContent(),
+    const Courses(),
+    const Messages(),
+    const Notice(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: IndexedStack(
+        index: currentIndex,
+        children: screens,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
+        iconSize: 30,
+        selectedItemColor: Color.fromARGB(255, 2, 124, 223).withOpacity(.7),
+        showUnselectedLabels: true,
+        unselectedItemColor: Colors.grey,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: "Classes"),
+          BottomNavigationBarItem(icon: Icon(Icons.message), label: "Messages"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.notifications), label: "Notifications"),
+        ],
+      ),
+    );
+  }
+}
+
+// Separate widget for the home screen content
+class HomeScreenContent extends StatelessWidget {
+  final List<String> catNames = [
     "Category",
     'Classes',
     'Free Courses',
@@ -14,7 +61,7 @@ class Homescreen extends StatelessWidget {
     'LeaderBoard'
   ];
 
-  List<Color> catColors = [
+  final List<Color> catColors = [
     Color.fromARGB(242, 153, 0, 255),
     Color.fromARGB(235, 0, 174, 255),
     Color.fromARGB(255, 0, 162, 255),
@@ -23,7 +70,7 @@ class Homescreen extends StatelessWidget {
     Color.fromARGB(226, 14, 19, 85),
   ];
 
-  List<Icon> catIcons = [
+  final List<Icon> catIcons = [
     Icon(
       Icons.category,
       color: Colors.white,
@@ -55,7 +102,8 @@ class Homescreen extends StatelessWidget {
       size: 30,
     ),
   ];
-  List imgList = ['IoT', 'HCI', 'Linux', 'SAD', 'Graphics'];
+
+  final List<String> imgList = ['IoT', 'HCI', 'Linux', 'SAD', 'Graphics'];
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +118,11 @@ class Homescreen extends StatelessWidget {
         title: Text(
           "Attendance App",
           style: TextStyle(
-              color: Colors.white,
-              wordSpacing: 2,
-              letterSpacing: 2,
-              fontWeight: FontWeight.w600),
+            color: Colors.white,
+            wordSpacing: 2,
+            letterSpacing: 2,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       body: ListView(
@@ -81,42 +130,38 @@ class Homescreen extends StatelessWidget {
           Container(
             padding: EdgeInsets.only(top: 15, bottom: 10, left: 15, right: 15),
             decoration: BoxDecoration(
-                color: Color.fromARGB(255, 0, 102, 255),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20))),
+              color: Color.fromARGB(255, 0, 102, 255),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
                 Padding(
-                  padding: EdgeInsets.only(
-                    left: 3,
-                    bottom: 15,
-                  ),
+                  padding: EdgeInsets.only(left: 3, bottom: 15),
                   child: Text(
                     "Hello, Teacher.",
                     style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 2,
-                        wordSpacing: 1,
-                        color: Colors.white),
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 2,
+                      wordSpacing: 1,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(
-                    top: 5,
-                    bottom: 15,
-                  ),
+                  margin: EdgeInsets.only(top: 5, bottom: 15),
                   width: MediaQuery.of(context).size.width,
                   height: 55,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: TextField(
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -130,54 +175,49 @@ class Homescreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(
-              top: 20,
-              left: 15,
-              right: 15,
-            ),
+            padding: EdgeInsets.only(top: 20, left: 15, right: 15),
             child: Column(
               children: [
                 GridView.builder(
-                    itemCount: catNames.length,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      childAspectRatio: 1.1,
-                    ),
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              color: catColors[index],
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: catIcons[index],
-                            ),
+                  itemCount: catNames.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 1.1,
+                  ),
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            color: catColors[index],
+                            shape: BoxShape.circle,
                           ),
-                          SizedBox(
-                            height: 10,
+                          child: Center(
+                            child: catIcons[index],
                           ),
-                          Text(
-                            catNames[index],
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black.withOpacity(.6),
-                            ),
-                          )
-                        ],
-                      );
-                    }),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          catNames[index],
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black.withOpacity(.6),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -188,18 +228,27 @@ class Homescreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Text(
-                      "See All..",
-                      style: TextStyle(
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Courses(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "See All..",
+                        style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
-                          color: Colors.blueGrey),
+                          color: Colors.blueGrey,
+                        ),
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 GridView.builder(
                   itemCount: 4,
                   shrinkWrap: true,
@@ -216,10 +265,11 @@ class Homescreen extends StatelessWidget {
                     return InkWell(
                       onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => classScreen(imgList[index]),
-                            ));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => classScreen(imgList[index]),
+                          ),
+                        );
                       },
                       child: Container(
                         padding:
@@ -238,50 +288,35 @@ class Homescreen extends StatelessWidget {
                                 height: 100,
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
+                            SizedBox(height: 10),
                             Text(
                               imgList[index],
                               style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black.withOpacity(.6)),
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black.withOpacity(.6),
+                              ),
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
+                            SizedBox(height: 5),
                             Text(
                               "55 Students",
                               style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black.withOpacity(.5)),
-                            )
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black.withOpacity(.5),
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     );
                   },
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          iconSize: 32,
-          selectedItemColor: Color.fromARGB(255, 2, 124, 223).withOpacity(.7),
-          showUnselectedLabels: true,
-          unselectedItemColor: Colors.grey,
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.book), label: "Classes"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.message), label: "Messages"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.notifications), label: "Notifications"),
-          ]),
     );
   }
 }

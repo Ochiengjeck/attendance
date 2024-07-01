@@ -24,7 +24,7 @@ class welcomescreen extends StatelessWidget {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 1.6,
+                  height: MediaQuery.of(context).size.height / 1.68,
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 0, 195, 255),
                       borderRadius:
@@ -42,7 +42,7 @@ class welcomescreen extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2.666,
+                height: MediaQuery.of(context).size.height / 2.466,
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 0, 195, 255),
                 ),
@@ -52,7 +52,7 @@ class welcomescreen extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2.666,
+                height: MediaQuery.of(context).size.height / 2.466,
                 padding: EdgeInsets.only(top: 40, bottom: 30),
                 decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 255, 255, 255),
@@ -74,12 +74,15 @@ class welcomescreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 40),
-                      child: Text(
-                        "Taking class attendance has never been easier. "
-                        "The all-in-one attendace taking and tracking solution for you....",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 14, color: Colors.black.withOpacity(0.4)),
+                      child: Center(
+                        child: Text(
+                          "Taking class attendance has never been easier. "
+                          "The all-in-one attendace taking and tracking solution for you....",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black.withOpacity(0.4)),
+                        ),
                       ),
                     ),
                     SizedBox(

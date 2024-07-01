@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'scan.dart';
 
+// ignore: must_be_immutable
 class classScreen extends StatefulWidget {
   String img;
   classScreen(this.img);
