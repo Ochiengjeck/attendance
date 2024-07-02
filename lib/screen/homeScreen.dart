@@ -7,6 +7,8 @@ import 'package:attendance/screen/notification.dart';
 import 'package:attendance/screen/classes.dart';
 
 class Homescreen extends StatefulWidget {
+  const Homescreen({super.key});
+
   @override
   _HomescreenState createState() => _HomescreenState();
 }
@@ -104,6 +106,8 @@ class HomeScreenContent extends StatelessWidget {
   ];
 
   final List<String> imgList = ['IoT', 'HCI', 'Linux', 'SAD', 'Graphics'];
+
+  HomeScreenContent({super.key});
 
   @override
   Widget build(BuildContext context) {

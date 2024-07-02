@@ -8,8 +8,8 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 class ScanCardScreen extends StatefulWidget {
   final String className; // Add this line
 
-  const ScanCardScreen({Key? key, required this.className})
-      : super(key: key); // Update constructor
+  const ScanCardScreen(
+      {super.key, required this.className}); // Update constructor
 
   @override
   State<ScanCardScreen> createState() => _ScanCardScreenState();
@@ -103,7 +103,7 @@ class _ScanCardScreenState extends State<ScanCardScreen> {
                   onPressed: () async {
                     final response = await http.post(
                       Uri.parse(
-                          'https://koala-literate-curiously.ngrok-free.app/attendance/record.php'),
+                          'https://cheetah-exotic-octopus.ngrok-free.app/attendance/record.php'),
                       headers: {'Content-Type': 'application/json'},
                       body: jsonEncode({
                         'className': widget.className,

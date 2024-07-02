@@ -16,7 +16,7 @@ class _CoursesState extends State<Courses> {
         centerTitle: true,
       ),
       body: Column(
-        children: [Text("Hellop world")],
+        children: const [Text("Hellop world")],
       ),
     );
   }

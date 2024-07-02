@@ -1,16 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:typed_data';
 import 'package:attendance/screen/courses.dart';
 import 'package:attendance/screen/messages.dart';
 import 'package:attendance/screen/notification.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-import 'package:attendance/screen/classes.dart';
 
 class index extends StatefulWidget {
+  const index({super.key});
+
   @override
   _indexState createState() => _indexState();
 }
@@ -82,7 +80,7 @@ class _indexState extends State<index> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 0, 102, 255),
         centerTitle: true,
-        actions: [
+        actions: const [
           Icon(Icons.menu),
           Padding(padding: EdgeInsets.only(right: 10))
         ],
@@ -107,7 +105,7 @@ class _indexState extends State<index> {
         selectedItemColor: Color.fromARGB(255, 2, 124, 223).withOpacity(.7),
         showUnselectedLabels: true,
         unselectedItemColor: Colors.grey,
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.book), label: "Classes"),
           BottomNavigationBarItem(icon: Icon(Icons.message), label: "Messages"),

@@ -7,7 +7,7 @@ import 'scan.dart';
 // ignore: must_be_immutable
 class classScreen extends StatefulWidget {
   String img;
-  classScreen(this.img);
+  classScreen(this.img, {super.key});
 
   @override
   State<classScreen> createState() => _classScreenState();
