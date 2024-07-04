@@ -5,6 +5,7 @@ import 'package:attendance/screen/courses.dart';
 import 'package:attendance/screen/messages.dart';
 import 'package:attendance/screen/notification.dart';
 import 'package:attendance/screen/classes.dart';
+import 'package:attendance/assets/data.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -21,6 +22,19 @@ class _HomescreenState extends State<Homescreen> {
     const Messages(),
     const Notice(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  // Method to load data
+  Future<void> _loadData() async {
+    DataService dataService = DataService();
+    await dataService.fetchData();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,59 +68,6 @@ class _HomescreenState extends State<Homescreen> {
 
 // Separate widget for the home screen content
 class HomeScreenContent extends StatelessWidget {
-  final List<String> catNames = [
-    "Category",
-    'Classes',
-    'Free Courses',
-    'BookStore',
-    'Live Courses',
-    'LeaderBoard'
-  ];
-
-  final List<Color> catColors = [
-    Color.fromARGB(242, 153, 0, 255),
-    Color.fromARGB(235, 0, 174, 255),
-    Color.fromARGB(255, 0, 162, 255),
-    Color.fromARGB(207, 81, 255, 0),
-    Color.fromARGB(197, 0, 110, 255),
-    Color.fromARGB(226, 14, 19, 85),
-  ];
-
-  final List<Icon> catIcons = [
-    Icon(
-      Icons.category,
-      color: Colors.white,
-      size: 30,
-    ),
-    Icon(
-      Icons.video_library,
-      color: Colors.white,
-      size: 30,
-    ),
-    Icon(
-      Icons.assignment,
-      color: Colors.white,
-      size: 30,
-    ),
-    Icon(
-      Icons.store,
-      color: Colors.white,
-      size: 30,
-    ),
-    Icon(
-      Icons.play_circle_fill,
-      color: Colors.white,
-      size: 30,
-    ),
-    Icon(
-      Icons.emoji_events,
-      color: Colors.white,
-      size: 30,
-    ),
-  ];
-
-  final List<String> imgList = ['IoT', 'HCI', 'Linux', 'SAD', 'Graphics'];
-
   HomeScreenContent({super.key});
 
   @override
@@ -147,7 +108,9 @@ class HomeScreenContent extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 3, bottom: 15),
                   child: Text(
-                    "Hello, Teacher.",
+                    admins.isNotEmpty
+                        ? 'Hello, ${admins[0]['fname']} ${admins[0]['lname']}'
+                        : 'Hello, Admin',
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w600,
@@ -303,7 +266,7 @@ class HomeScreenContent extends StatelessWidget {
                             ),
                             SizedBox(height: 5),
                             Text(
-                              "55 Students",
+                              IoT.length.toString() + " Students",
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
@@ -316,6 +279,9 @@ class HomeScreenContent extends StatelessWidget {
                     );
                   },
                 ),
+                SizedBox(
+                  height: 20,
+                )
               ],
             ),
           ),

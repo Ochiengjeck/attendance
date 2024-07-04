@@ -1,34 +1,77 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'scan.dart';
+import 'package:attendance/assets/data.dart';
 
-// ignore: must_be_immutable
 class classScreen extends StatefulWidget {
-  String img;
-  classScreen(this.img, {super.key});
+  final String img;
+
+  classScreen(this.img, {Key? key}) : super(key: key);
 
   @override
   State<classScreen> createState() => _classScreenState();
 }
 
 class _classScreenState extends State<classScreen> {
+  List<String> students = []; // Initialize an empty list for students
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData(); // Fetch data when the widget initializes
+  }
+
+  void fetchData() async {
+    try {
+      // Fetch data based on widget.img using your data service
+      DataService dataService = DataService();
+      Map<String, dynamic> data = await dataService.fetchData();
+
+      // Assign the correct list of students based on widget.img
+      switch (widget.img) {
+        case 'IoT':
+          setState(() {
+            students =
+                data['iot'].map<String>((student) => student['name']).toList();
+          });
+          break;
+        case 'HCI':
+          setState(() {
+            students =
+                data['hci'].map<String>((student) => student['name']).toList();
+          });
+          break;
+        case 'Linux':
+          setState(() {
+            students = data['linux']
+                .map<String>((student) => student['name'])
+                .toList();
+          });
+          break;
+        case 'SAD':
+          setState(() {
+            students =
+                data['sad'].map<String>((student) => student['name']).toList();
+          });
+          break;
+        case 'Graphics':
+          setState(() {
+            students = data['graphics']
+                .map<String>((student) => student['name'])
+                .toList();
+          });
+          break;
+        default:
+          setState(() {
+            students = []; // Handle default case or invalid img value
+          });
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<String> names = [
-      'Tamandani Mangochi',
-      'Jeckonia Opiyo',
-      'Bob Colimo',
-      'Charlie Puth',
-      'David Gutea',
-      'Eva Max',
-      'Franklin Ochieng',
-      'Grace Ramesh',
-      'Hannah Montanah',
-      'Ivan Delvis',
-      'Jack Ripper'
-    ];
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.black,
@@ -70,20 +113,8 @@ class _classScreenState extends State<classScreen> {
                   image: AssetImage("images/${widget.img}.png"),
                 ),
               ),
-              // child: Center(
-              //   child: Container(
-              //     padding: EdgeInsets.all(10),
-              //     decoration: BoxDecoration(
-              //       color: Colors.white,
-              //       shape: BoxShape.circle,
-              //     ),
-              //     child: Icon(Icons.assessment),
-              //   ),
-              // ),
             ),
-            SizedBox(
-              height: 15,
-            ),
+            SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -93,13 +124,7 @@ class _classScreenState extends State<classScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            ScanCardScreen(className: widget.img),
-                      ),
-                    );
+                    // Implement your action
                   },
                   child: Container(
                     padding: EdgeInsets.all(8),
@@ -110,43 +135,40 @@ class _classScreenState extends State<classScreen> {
                     child: Text(
                       "Take Attendance",
                       style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          letterSpacing: 2,
-                          wordSpacing: 2,
-                          fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontSize: 12,
+                        letterSpacing: 2,
+                        wordSpacing: 2,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(
-              height: 5,
-            ),
+            SizedBox(height: 5),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: SingleChildScrollView(
-                  child: DataTable(
-                    columns: [
-                      DataColumn(label: Text('Name')),
-                      DataColumn(label: Text('Date 1')),
-                      DataColumn(label: Text('Date 2')),
-                      DataColumn(label: Text('Date 3')),
-                    ],
-                    rows: List<DataRow>.generate(
-                      names.length,
-                      (index) => DataRow(
-                        cells: [
-                          DataCell(Text(names[index])),
-                          DataCell(Text(_formatDate(DateTime.now()))),
-                          DataCell(Text(_formatDate(
-                              DateTime.now().add(Duration(days: 2))))),
-                          DataCell(Text(_formatDate(
-                              DateTime.now().add(Duration(days: 4))))),
-                        ],
-                      ),
+                child: DataTable(
+                  columns: [
+                    DataColumn(label: Text('Name')),
+                    DataColumn(label: Text('Date 1')),
+                    DataColumn(label: Text('Date 2')),
+                    DataColumn(label: Text('Date 3')),
+                  ],
+                  rows: List<DataRow>.generate(
+                    students.length,
+                    (index) => DataRow(
+                      cells: [
+                        DataCell(Text(students[index])),
+                        DataCell(Text(_formatDate(DateTime.now()))),
+                        DataCell(Text(_formatDate(
+                            DateTime.now().add(Duration(days: 2))))),
+                        DataCell(Text(_formatDate(
+                            DateTime.now().add(Duration(days: 4))))),
+                      ],
                     ),
                   ),
                 ),
