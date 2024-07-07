@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:attendance/assets/data.dart';
+import 'homeScreen.dart';
 
 class classScreen extends StatefulWidget {
   final String img;
@@ -27,44 +27,34 @@ class _classScreenState extends State<classScreen> {
       Map<String, dynamic> data = await dataService.fetchData();
 
       // Assign the correct list of students based on widget.img
-      switch (widget.img) {
-        case 'IoT':
-          setState(() {
+      setState(() {
+        switch (widget.img) {
+          case 'IoT':
             students =
                 data['iot'].map<String>((student) => student['name']).toList();
-          });
-          break;
-        case 'HCI':
-          setState(() {
+            break;
+          case 'HCI':
             students =
                 data['hci'].map<String>((student) => student['name']).toList();
-          });
-          break;
-        case 'Linux':
-          setState(() {
+            break;
+          case 'Linux':
             students = data['linux']
                 .map<String>((student) => student['name'])
                 .toList();
-          });
-          break;
-        case 'SAD':
-          setState(() {
+            break;
+          case 'SAD':
             students =
                 data['sad'].map<String>((student) => student['name']).toList();
-          });
-          break;
-        case 'Graphics':
-          setState(() {
+            break;
+          case 'Graphics':
             students = data['graphics']
                 .map<String>((student) => student['name'])
                 .toList();
-          });
-          break;
-        default:
-          setState(() {
+            break;
+          default:
             students = []; // Handle default case or invalid img value
-          });
-      }
+        }
+      });
     } catch (e) {
       print('Error fetching data: $e');
     }

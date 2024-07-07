@@ -5,7 +5,16 @@ import 'package:attendance/screen/courses.dart';
 import 'package:attendance/screen/messages.dart';
 import 'package:attendance/screen/notification.dart';
 import 'package:attendance/screen/classes.dart';
-import 'package:attendance/assets/data.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+List<Map<String, dynamic>> admins = [];
+List<Map<String, dynamic>> students = [];
+List<Map<String, dynamic>> IoT = [];
+List<Map<String, dynamic>> HCI = [];
+List<Map<String, dynamic>> Linux = [];
+List<Map<String, dynamic>> SAD = [];
+List<Map<String, dynamic>> Graphics = [];
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -70,8 +79,27 @@ class _HomescreenState extends State<Homescreen> {
 class HomeScreenContent extends StatelessWidget {
   HomeScreenContent({super.key});
 
+  // Function to get student count based on course name
+  int getStudentCount(String courseName) {
+    switch (courseName) {
+      case 'IoT':
+        return IoT.length;
+      case 'HCI':
+        return HCI.length;
+      case 'Linux':
+        return Linux.length;
+      case 'SAD':
+        return SAD.length;
+      case 'Graphics':
+        return Graphics.length;
+      default:
+        return 0;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    print("data");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 0, 102, 255),
@@ -266,7 +294,8 @@ class HomeScreenContent extends StatelessWidget {
                             ),
                             SizedBox(height: 5),
                             Text(
-                              IoT.length.toString() + " Students",
+                              getStudentCount(imgList[index]).toString() +
+                                  " Students",
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
@@ -288,5 +317,37 @@ class HomeScreenContent extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class DataService {
+  // Method to fetch data from the server
+  Future<Map<String, dynamic>> fetchData() async {
+    try {
+      final response =
+          await http.get(Uri.parse('http://localhost/attendance/data.php'));
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = json.decode(response.body);
+
+        // Assign data to variables
+        admins = List<Map<String, dynamic>>.from(data['admins']);
+        students = List<Map<String, dynamic>>.from(data['students']);
+        IoT = List<Map<String, dynamic>>.from(data['iot']);
+        HCI = List<Map<String, dynamic>>.from(data['hci']);
+        Linux = List<Map<String, dynamic>>.from(data['linux']);
+        SAD = List<Map<String, dynamic>>.from(data['sad']);
+        Graphics = List<Map<String, dynamic>>.from(data['graphics']);
+
+        print("$data Is here");
+        return data; // Ensure to return the fetched data
+      } else {
+        print("Failed to load data with status code: ${response.statusCode}");
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      print("An error occurred: $e");
+      throw Exception('Failed to load data');
+    }
   }
 }
