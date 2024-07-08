@@ -118,9 +118,9 @@ class _classScreenState extends State<classScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ScanCardScreen(
-                                className: 'ScanCardScreen',
-                              )),
+                        builder: (context) =>
+                            ScanCardScreen(className: widget.img),
+                      ),
                     );
                   },
                   child: Container(
