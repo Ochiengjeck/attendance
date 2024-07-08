@@ -189,15 +189,37 @@ class HomeScreenContent extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: catColors[index],
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: catIcons[index],
+                        InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Oups, we are sorry"),
+                                  content:
+                                      Text("This service is under maintenance"),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text("OK"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                              color: catColors[index],
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: catIcons[index],
+                            ),
                           ),
                         ),
                         SizedBox(height: 10),
@@ -324,8 +346,8 @@ class DataService {
   // Method to fetch data from the server
   Future<Map<String, dynamic>> fetchData() async {
     try {
-      final response =
-          await http.get(Uri.parse('http://localhost/attendance/data.php'));
+      final response = await http.get(Uri.parse(
+          'https://koala-literate-curiously.ngrok-free.app/attendance/data.php'));
 
       if (response.statusCode == 200) {
         Map<String, dynamic> data = json.decode(response.body);

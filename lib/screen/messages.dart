@@ -40,37 +40,60 @@ class _MessagesState extends State<Messages> {
           Expanded(
               child: ListView.separated(
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width * 0.08),
-                      isThreeLine: true,
-                      leading: CircleAvatar(
-                        radius: 25,
-                        backgroundImage: AssetImage("images/prof.jpeg"),
-                      ),
-                      title: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Tamandani Mangochi",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                    return InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Service Notification"),
+                              content:
+                                  Text("This service is under maintenance"),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text("OK"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: ListTile(
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal:
+                                MediaQuery.of(context).size.width * 0.08),
+                        isThreeLine: true,
+                        leading: CircleAvatar(
+                          radius: 25,
+                          backgroundImage: AssetImage("images/profile.jpeg"),
+                        ),
+                        title: const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Tamandani Mangochi",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
+                            Text(
+                              "2hrs Ago",
+                              style: TextStyle(
+                                  fontSize: 12, fontStyle: FontStyle.italic),
+                            )
+                          ],
+                        ),
+                        subtitle: Text(
+                          "Hello sir, I will not make it to todays class, Fundamentals of programming. Please consider my appologies",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 14,
                           ),
-                          Text(
-                            "2hrs Ago",
-                            style: TextStyle(
-                                fontSize: 12, fontStyle: FontStyle.italic),
-                          )
-                        ],
-                      ),
-                      subtitle: Text(
-                        "Hello sir, I will not make it to todays class, Fundamentals of programming. Please consider my appologies",
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontSize: 14,
                         ),
                       ),
                     );

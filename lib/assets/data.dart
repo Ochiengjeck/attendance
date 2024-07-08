@@ -16,8 +16,8 @@ class DataService {
   // Method to fetch data from the server
   Future<Map<String, dynamic>> fetchData() async {
     try {
-      final response =
-          await http.get(Uri.parse('http://localhost/attendance/data.php'));
+      final response = await http.get(Uri.parse(
+          'https://cheetah-exotic-octopus.ngrok-free.app/attendance/data.php'));
 
       if (response.statusCode == 200) {
         Map<String, dynamic> data = json.decode(response.body);

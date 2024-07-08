@@ -30,26 +30,47 @@ class _NoticeState extends State<Notice> {
   }
 
   Widget listViewItem(int index) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          prefixIcon(),
-          SizedBox(
-            width: 5,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                message(index),
-                timeAndDate(index),
+    return InkWell(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Service Notification"),
+              content: Text("This service is under maintenance"),
+              actions: <Widget>[
+                TextButton(
+                  child: Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
               ],
+            );
+          },
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            prefixIcon(),
+            SizedBox(
+              width: 5,
             ),
-          ),
-        ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  message(index),
+                  timeAndDate(index),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

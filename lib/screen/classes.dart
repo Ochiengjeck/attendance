@@ -1,6 +1,7 @@
+import 'package:attendance/screen/scan.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'homeScreen.dart';
+import '../assets/data.dart';
 
 class classScreen extends StatefulWidget {
   final String img;
@@ -114,7 +115,13 @@ class _classScreenState extends State<classScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    // Implement your action
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ScanCardScreen(
+                                className: 'ScanCardScreen',
+                              )),
+                    );
                   },
                   child: Container(
                     padding: EdgeInsets.all(8),
