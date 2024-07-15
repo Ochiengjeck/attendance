@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:attendance/screen/homeScreen.dart';
+import 'package:attendance/screen/login.dart';
 import 'package:flutter/material.dart';
 
 class welcomescreen extends StatelessWidget {
@@ -96,7 +97,7 @@ class welcomescreen extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Homescreen(),
+                                builder: (context) => LoginPage(),
                               ));
                         },
                         child: Container(
