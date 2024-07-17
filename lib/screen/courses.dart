@@ -1,4 +1,5 @@
 import 'package:attendance/screen/classes.dart';
+import 'homeScreen.dart';
 import 'package:flutter/material.dart';
 
 // Define the variables that you want to use across different files
@@ -133,8 +134,8 @@ class _CoursesState extends State<Courses> {
                               ),
                               SizedBox(height: 5),
                               Text(
-                                imgList[index].length.toString() +
-                                    " Students Enrolled",
+                                getStudentCount(imgList[index]).toString() +
+                                    " Students",
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,

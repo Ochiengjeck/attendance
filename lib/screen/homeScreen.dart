@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:attendance/screen/courses.dart';
@@ -15,9 +15,10 @@ List<Map<String, dynamic>> HCI = [];
 List<Map<String, dynamic>> Linux = [];
 List<Map<String, dynamic>> SAD = [];
 List<Map<String, dynamic>> Graphics = [];
+int x = 0;
 
 class Homescreen extends StatefulWidget {
-  const Homescreen({super.key});
+  const Homescreen({Key? key}) : super(key: key);
 
   @override
   _HomescreenState createState() => _HomescreenState();
@@ -32,74 +33,84 @@ class _HomescreenState extends State<Homescreen> {
     const Notice(),
   ];
 
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
     _loadData();
   }
 
-  // Method to load data
   Future<void> _loadData() async {
+    try {
+      await _fetchData();
+    } catch (e) {
+      print('Failed to load data: $e');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _fetchData() async {
     DataService dataService = DataService();
-    await dataService.fetchData();
-    setState(() {});
+    Map<String, dynamic> data = await dataService.fetchData();
+
+    admins = List<Map<String, dynamic>>.from(data['admins']);
+    students = List<Map<String, dynamic>>.from(data['students']);
+    IoT = List<Map<String, dynamic>>.from(data['iot']);
+    HCI = List<Map<String, dynamic>>.from(data['hci']);
+    Linux = List<Map<String, dynamic>>.from(data['linux']);
+    SAD = List<Map<String, dynamic>>.from(data['sad']);
+    Graphics = List<Map<String, dynamic>>.from(data['graphics']);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: currentIndex,
-        children: screens,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        iconSize: 30,
-        selectedItemColor: Color.fromARGB(255, 2, 124, 223).withOpacity(.7),
-        showUnselectedLabels: true,
-        unselectedItemColor: Colors.grey,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.book), label: "Classes"),
-          BottomNavigationBarItem(icon: Icon(Icons.message), label: "Messages"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: "Notifications"),
-        ],
-      ),
-    );
+    if (_isLoading) {
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      return Scaffold(
+        body: IndexedStack(
+          index: currentIndex,
+          children: screens,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+          iconSize: 30,
+          selectedItemColor: Color.fromARGB(255, 2, 124, 223).withOpacity(.7),
+          showUnselectedLabels: true,
+          unselectedItemColor: Colors.grey,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.book), label: "Classes"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.message), label: "Messages"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.notifications), label: "Notifications"),
+          ],
+        ),
+      );
+    }
   }
 }
 
 // Separate widget for the home screen content
 class HomeScreenContent extends StatelessWidget {
-  HomeScreenContent({super.key});
-
-  // Function to get student count based on course name
-  int getStudentCount(String courseName) {
-    switch (courseName) {
-      case 'IoT':
-        return IoT.length;
-      case 'HCI':
-        return HCI.length;
-      case 'Linux':
-        return Linux.length;
-      case 'SAD':
-        return SAD.length;
-      case 'Graphics':
-        return Graphics.length;
-      default:
-        return 0;
-    }
-  }
+  HomeScreenContent({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    print("data");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 0, 102, 255),
@@ -342,17 +353,36 @@ class HomeScreenContent extends StatelessWidget {
   }
 }
 
+int getStudentCount(String courseName) {
+  switch (courseName) {
+    case 'IoT':
+      return IoT.length;
+    case 'HCI':
+      return HCI.length;
+    case 'Linux':
+      return Linux.length;
+    case 'SAD':
+      return SAD.length;
+    case 'Graphics':
+      return Graphics.length;
+    default:
+      return 0;
+  }
+}
+
 class DataService {
   // Method to fetch data from the server
   Future<Map<String, dynamic>> fetchData() async {
     try {
+      print("Fetching data...");
       final response = await http.get(Uri.parse(
-          'https://koala-literate-curiously.ngrok-free.app/attendance/data.php'));
+          // 'https://koala-literate-curiously.ngrok-free.app/attendance/data.php'));
+          'http://localhost/attendance/data.php'));
 
       if (response.statusCode == 200) {
         Map<String, dynamic> data = json.decode(response.body);
 
-        // Assign data to variables
+        // Assign fetched data to local variables
         admins = List<Map<String, dynamic>>.from(data['admins']);
         students = List<Map<String, dynamic>>.from(data['students']);
         IoT = List<Map<String, dynamic>>.from(data['iot']);
@@ -361,7 +391,6 @@ class DataService {
         SAD = List<Map<String, dynamic>>.from(data['sad']);
         Graphics = List<Map<String, dynamic>>.from(data['graphics']);
 
-        print("$data Is here");
         return data; // Ensure to return the fetched data
       } else {
         print("Failed to load data with status code: ${response.statusCode}");

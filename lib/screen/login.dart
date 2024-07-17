@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:attendance/screen/homeScreen.dart';
+import 'package:flutter/material.dart';
 import 'package:attendance/screen/studentScreen.dart';
 import 'package:attendance/screen/staffScreen.dart';
 import 'package:attendance/screen/adminScreen.dart';
@@ -23,7 +23,8 @@ class _LoginPageState extends State<LoginPage> {
         if (emailPrefix.startsWith('staff')) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => StaffScreen(email: email)),
+            // MaterialPageRoute(builder: (context) => StaffScreen(email: email)),
+            MaterialPageRoute(builder: (context) => Homescreen()),
           );
         } else {
           Navigator.push(

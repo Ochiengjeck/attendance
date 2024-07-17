@@ -1,7 +1,7 @@
 import 'package:attendance/screen/scan.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../assets/data.dart';
+import '../assets/data.dart'; // Make sure this file correctly references your data service
 
 class classScreen extends StatefulWidget {
   final String img;
@@ -24,33 +24,30 @@ class _classScreenState extends State<classScreen> {
   void fetchData() async {
     try {
       // Fetch data based on widget.img using your data service
-      DataService dataService = DataService();
-      Map<String, dynamic> data = await dataService.fetchData();
+      Map<String, dynamic> data = await DataService.fetchData();
 
       // Assign the correct list of students based on widget.img
       setState(() {
         switch (widget.img) {
           case 'IoT':
-            students =
-                data['iot'].map<String>((student) => student['name']).toList();
+            students = List<String>.from(
+                data['iot'].map((student) => student['name']));
             break;
           case 'HCI':
-            students =
-                data['hci'].map<String>((student) => student['name']).toList();
+            students = List<String>.from(
+                data['hci'].map((student) => student['name']));
             break;
           case 'Linux':
-            students = data['linux']
-                .map<String>((student) => student['name'])
-                .toList();
+            students = List<String>.from(
+                data['linux'].map((student) => student['name']));
             break;
           case 'SAD':
-            students =
-                data['sad'].map<String>((student) => student['name']).toList();
+            students = List<String>.from(
+                data['sad'].map((student) => student['name']));
             break;
           case 'Graphics':
-            students = data['graphics']
-                .map<String>((student) => student['name'])
-                .toList();
+            students = List<String>.from(
+                data['graphics'].map((student) => student['name']));
             break;
           default:
             students = []; // Handle default case or invalid img value
@@ -151,20 +148,12 @@ class _classScreenState extends State<classScreen> {
                 child: DataTable(
                   columns: [
                     DataColumn(label: Text('Name')),
-                    DataColumn(label: Text('Date 1')),
-                    DataColumn(label: Text('Date 2')),
-                    DataColumn(label: Text('Date 3')),
                   ],
                   rows: List<DataRow>.generate(
                     students.length,
                     (index) => DataRow(
                       cells: [
                         DataCell(Text(students[index])),
-                        DataCell(Text(_formatDate(DateTime.now()))),
-                        DataCell(Text(_formatDate(
-                            DateTime.now().add(Duration(days: 2))))),
-                        DataCell(Text(_formatDate(
-                            DateTime.now().add(Duration(days: 4))))),
                       ],
                     ),
                   ),

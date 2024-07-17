@@ -14,15 +14,17 @@ List<Map<String, dynamic>> Graphics = [];
 
 class DataService {
   // Method to fetch data from the server
-  Future<Map<String, dynamic>> fetchData() async {
+  static Future<Map<String, dynamic>> fetchData() async {
     try {
+      print("Fetching data...");
       final response = await http.get(Uri.parse(
-          'https://cheetah-exotic-octopus.ngrok-free.app/attendance/data.php'));
+          // 'https://koala-literate-curiously.ngrok-free.app/attendance/data.php'));
+          'http://localhost/attendance/data.php'));
 
       if (response.statusCode == 200) {
         Map<String, dynamic> data = json.decode(response.body);
 
-        // Assign data to variables
+// Assign fetched data to local variables
         admins = List<Map<String, dynamic>>.from(data['admins']);
         students = List<Map<String, dynamic>>.from(data['students']);
         IoT = List<Map<String, dynamic>>.from(data['iot']);
@@ -31,7 +33,7 @@ class DataService {
         SAD = List<Map<String, dynamic>>.from(data['sad']);
         Graphics = List<Map<String, dynamic>>.from(data['graphics']);
 
-        print("$data Is here");
+        print("admis are $admins");
         return data; // Ensure to return the fetched data
       } else {
         print("Failed to load data with status code: ${response.statusCode}");
