@@ -32,8 +32,8 @@ Copy PHP Files:
 Copy the provided PHP files from the "php files" folder into the htdocs directory of your XAMPP installation (e.g., C:\xampp\htdocs\attendance).
 
 
-# NOTE: Ensure PHP Files are Correct !!
-    Make sure the PHP files are configured to connect to your database. Modify the database connection details if necessary.
+## NOTE: Ensure PHP Files are Correct !!
+    - Make sure the PHP files are configured to connect to your database. Modify the database connection details if necessary.
 
 3. Set Up Flutter Project
 clone this project into your local machine
@@ -50,9 +50,3 @@ Run the Flutter app:
 You now have an Attendance App built with Flutter that communicates with a MySQL database to facilitate easy attendance tracking. Modify the PHP and Flutter code as needed to fit your requirements. For any issues or contributions, feel free to reach out!
 
 
-### Summary of Content
-- **Introduction**: Describes what the app does.
-- **Features**: Highlights key functionalities.
-- **Prerequisites**: Lists the necessary software and knowledge.
-- **Setup Instructions**: Detailed steps for setting up the database, PHP files, and Flutter project.
-- **Conclusion**: Encourages further modifications and contributions.
