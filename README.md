@@ -24,22 +24,15 @@ This project is a Flutter application that allows lecturers to conveniently take
 2. **Create a Database**:
    - Open phpMyAdmin by navigating to `http://localhost/phpmyadmin`.
    - Create a new database (e.g., `attend`).
+   - Import the sql file provided in the "php files" folder into your database
 
-3. **Create a Table**:
-   - Create a table (e.g., `users`) with the following structure:
 
-   ```sql
-   CREATE TABLE users (
-       id INT AUTO_INCREMENT PRIMARY KEY,
-       name VARCHAR(100) NOT NULL,
-       email VARCHAR(100) NOT NULL
-   );
 2. Set Up PHP Files
 Copy PHP Files:
 Copy the provided PHP files from the "php files" folder into the htdocs directory of your XAMPP installation (e.g., C:\xampp\htdocs\attendance).
-Ensure PHP Files are Correct:
 
-# NOTE: 
+
+# NOTE: Ensure PHP Files are Correct !!
     Make sure the PHP files are configured to connect to your database. Modify the database connection details if necessary.
 
 3. Set Up Flutter Project
