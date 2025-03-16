@@ -1,7 +1,6 @@
 import 'package:attendance/screen/homeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:attendance/screen/studentScreen.dart';
-import 'package:attendance/screen/staffScreen.dart';
 import 'package:attendance/screen/adminScreen.dart';
 
 class LoginPage extends StatefulWidget {
